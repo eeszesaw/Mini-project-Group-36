@@ -5,12 +5,11 @@
 
 using namespace std;
 
-// Assuming Contact is already defined globally or in a common header
 extern vector<Contact> contacts;
 
 void deleteContact() {
     string name;
-    cout << "Enter the name of the contact to delete: ";
+    cout << "Enter the full name of the contact to delete: ";  // Prompt for first and last name
     getline(cin, name);
 
     auto it = remove_if(contacts.begin(), contacts.end(),
@@ -22,3 +21,4 @@ void deleteContact() {
         cout << "Contact not found.\n";
     }
 }
+
