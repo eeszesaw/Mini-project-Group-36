@@ -9,7 +9,8 @@ SRC = main.cpp \
       ContactManager.cpp \
       deleteContact.cpp \
       EditContact.cpp \
-      ViewContact.cpp
+      ViewContact.cpp \
+      SearchContact.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)
