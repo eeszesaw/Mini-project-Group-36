@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "AddContact.hpp"
+#include "Contact.hpp"
 #include "ContactManager.hpp"
 #include "deleteContact.hpp"
 #include "EditContact.hpp"
@@ -20,8 +21,8 @@ void displayMenu() {
 }
 
 int main() {
-    ContactManager& manager;
-    std::string name;
+    ContactManager manager;
+    std::string firstName, lastName, fullName;
     int choice;
     bool isRunning = true;
 
@@ -32,14 +33,25 @@ int main() {
 
         switch (choice) {
             case 1: {
+               std::string phone, email;
                 Contact newContact;
-                std::cout << "Enter contact name: ";
-                std::getline(std::cin, newContact.name);
+                std::cout << "Enter first name: ";
+                std::getline(std::cin, firstName);
+                newContact.setFirstName(firstName);
+
+                std::cout << "Enter last name: ";
+                std::getline(std::cin, lastName);
+                newContact.setLastName(lastName);
+
                 std::cout << "Enter phone number: ";
-                std::getline(std::cin, newContact.phone_number);
+                std::getline(std::cin, phone);
+                newContact.setPhone(phone);
+
                 std::cout << "Enter email: ";
-                std::getline(std::cin, newContact.email);
-    
+                std::getline(std::cin, email);
+                newContact.setEmail(email);
+
+                manager.addContact(newContact);
                 break;
             }
             case 2:

@@ -12,23 +12,39 @@ private:
     std::string email;
 
 public:
-    Contact() = default;
-
-    Contact(const std::string& firstName, const std::string& lastName, const std::string& phone, const std::string& email)
+    // Constructor
+    Contact(const std::string& firstName = "",
+            const std::string& lastName = "",
+            const std::string& phone = "",
+            const std::string& email = "")
         : firstName(firstName), lastName(lastName), phone(phone), email(email) {}
 
-    std::string getFirstName() const { return firstName; }
-    std::string getLastName() const { return lastName; }
-    std::string getPhone() const { return phone; }
-    std::string getEmail() const { return email; }
+    // Getters
+    std::string getFullName() const {
+        return firstName + " " + lastName;
+    }
+    std::string getPhone() const {
+        return phone;
+    }
+    std::string getEmail() const {
+        return email;
+    }
 
-    void setFirstName(const std::string& fName) { firstName = fName; }
-    void setLastName(const std::string& lName) { lastName = lName; }
-    void setPhone(const std::string& phoneNumber) { phone = phoneNumber; }
-    void setEmail(const std::string& emailAddress) { email = emailAddress; }
+    // Setters
+    void setFirstName(const std::string& firstName) {
+        this->firstName = firstName;
+    }
+    void setLastName(const std::string& lastName) {
+        this->lastName = lastName;
+    }
+    void setPhone(const std::string& phone) {
+        this->phone = phone;
+    }
+    void setEmail(const std::string& email) {
+        this->email = email;
+    }
 
-    std::string getFullName() const { return firstName + " " + lastName; }
-
+    // Display contact information
     void display() const {
         std::cout << "Name: " << firstName << " " << lastName << "\n";
         std::cout << "Phone: " << phone << "\n";

@@ -1,28 +1,45 @@
-#include "Contact.hpp"
+##include "Contact.hpp"
 
-Contact::Contact(const std::string& name, const std::string& phoneNumber, const std::string& email)
-    : name(name), phoneNumber(phoneNumber), email(email) {}
+// Constructor
+Contact::Contact(const std::string& firstName, const std::string& lastName,
+                 const std::string& phone, const std::string& email)
+    : firstName(firstName), lastName(lastName), phone(phone), email(email) {}
 
-std::string Contact::getName() const {
-    return name;
+// Getters
+std::string Contact::getFullName() const {
+    return firstName + " " + lastName;
 }
 
-std::string Contact::getPhoneNumber() const {
-    return phoneNumber;
+std::string Contact::getFirstName() const {
+    return firstName;
+}
+
+std::string Contact::getLastName() const {
+    return lastName;
+}
+
+std::string Contact::getPhone() const {
+    return phone;
 }
 
 std::string Contact::getEmail() const {
     return email;
 }
 
-void Contact::setName(const std::string& name) {
-    this->name = name;
+// Setters
+void Contact::setFirstName(const std::string& firstName) {
+    this->firstName = firstName;
 }
 
-void Contact::setPhoneNumber(const std::string& phoneNumber) {
-    this->phoneNumber = phoneNumber;
+void Contact::setLastName(const std::string& lastName) {
+    this->lastName = lastName;
+}
+
+void Contact::setPhone(const std::string& phone) {
+    this->phone = phone;
 }
 
 void Contact::setEmail(const std::string& email) {
     this->email = email;
 }
+

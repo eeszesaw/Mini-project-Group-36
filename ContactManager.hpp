@@ -1,14 +1,23 @@
-void ContactManager::saveToFile(const string& filename) const {
-    ofstream outFile(filename);
-    if (!outFile) {
-        cerr << "Error opening file for writing: " << filename << '\n';
-        return;
-    }
+#ifndef CONTACTMANAGER_HPP
+#define CONTACTMANAGER_HPP
 
-    for (const auto& contact : contacts) {
-        outFile << contact.getFirstName() << '\n'
-                << contact.getLastName() << '\n'
-                << contact.getPhone() << '\n'
-                << contact.getEmail() << '\n';
-    }
-}
+#include "Contact.hpp"
+#include <vector>
+#include <string>
+
+class ContactManager {
+private:
+    std::vector<Contact> contacts;
+
+public:
+    void addContact(const Contact& contact);
+    void viewAllContacts() const;
+    Contact* searchContact(const std::string& fullName);
+    bool editContact(const std::string& fullName);
+    bool deleteContact(const std::string& fullName);
+    void saveToFile(const std::string& filename) const;
+    void loadFromFile(const std::string& filename);
+};
+
+#endif // CONTACTMANAGER_HPP
+
