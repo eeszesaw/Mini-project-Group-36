@@ -20,7 +20,7 @@ void displayMenu() {
 }
 
 int main() {
-    ContactManager manager;
+    ContactManager& manager;
     std::string name;
     int choice;
     bool isRunning = true;
@@ -39,11 +39,7 @@ int main() {
                 std::getline(std::cin, newContact.phone_number);
                 std::cout << "Enter email: ";
                 std::getline(std::cin, newContact.email);
-                std::cout << "Enter birthday (YYYY-MM-DD): ";
-                std::getline(std::cin, newContact.birthday);
-                std::cout << "Enter note: ";
-                std::getline(std::cin, newContact.note);
-                manager.addContact(newContact);
+    
                 break;
             }
             case 2:

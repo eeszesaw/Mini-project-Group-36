@@ -1,4 +1,5 @@
 #include "ContactManager.hpp"
+#include "Contact.hpp"
 #include <fstream>
 #include <iostream>
 #include <algorithm>

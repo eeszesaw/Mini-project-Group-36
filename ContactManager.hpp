@@ -1,13 +1,14 @@
-class ContactManager {
-private:
-    std::vector<Contact> contacts;
+void ContactManager::saveToFile(const string& filename) const {
+    ofstream outFile(filename);
+    if (!outFile) {
+        cerr << "Error opening file for writing: " << filename << '\n';
+        return;
+    }
 
-public:
-    void addContact(const Contact& contact);
-    void viewAllContacts() const;
-    Contact* searchContact(const std::string& name);
-    bool editContact(const std::string& name);
-    bool deleteContact(const std::string& name);
-    void saveToFile(const std::string& filename) const;
-    void loadFromFile(const std::string& filename);
-};
+    for (const auto& contact : contacts) {
+        outFile << contact.getFirstName() << '\n'
+                << contact.getLastName() << '\n'
+                << contact.getPhone() << '\n'
+                << contact.getEmail() << '\n';
+    }
+}
