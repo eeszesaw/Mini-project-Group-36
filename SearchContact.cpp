@@ -1,33 +1,42 @@
-#include <algorithm> // For transform function
-#include <cctype>    // For tolower function
+#include "SearchContact.hpp"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+using namespace std;
+
 void searchContact() {
     string query;
-    cout << "\nEnter a single letter (case-insensitive) to search for:";
-    getline(cin, query);
-    // Check if input is a single letter
-    if (query.length() != 1 || !isalpha(query[0])) {
-        cout << "Please enter a valid single alphabet letter.\n";
-        return;
-    }
-    char queryChar = tolower(query[0]);
-    vector<Contact> contacts = loadContacts();
+    cout << "Enter name or phone number to search: ";
+    cin >> query;
+
+    ifstream inFile("contacts.txt");
+    string line;
     bool found = false;
-    for (const auto& contact : contacts) {
-        // Check if the character exists in any part of the contact fields (case-insensitive)
-        if (containsChar(contact.firstName, queryChar) ||
-            containsChar(contact.lastName, queryChar) ||
-            containsChar(contact.phoneNumber, queryChar)) {
-            
-            cout << "\nContact Found:\n";
-            cout << "Name: " << contact.firstName << " " << contact.lastName << "\n";
-            cout << "Phone: " << contact.phoneNumber << "\n";
-            cout << "Email: " << contact.email << "\n";
-            cout << "Birthday: " << contact.birthday << "\n";
-            cout << "Note: " << contact.note << "\n";
+
+    while (getline(inFile, line)) {
+        stringstream ss(line);
+        string firstName, lastName, phone, email, birthday, note;
+        ss >> firstName >> lastName >> phone >> email >> birthday;
+        getline(ss, note);
+
+        if (firstName == query || lastName == query || phone == query) {
+            cout << "\nContact found:\n";
+            cout << "Name: " << firstName << " " << lastName << endl;
+            cout << "Phone: " << phone << endl;
+            cout << "Email: " << email << endl;
+            cout << "Birthday: " << birthday << endl;
+            cout << "Note: " << note << endl;
             found = true;
+            break;
         }
     }
+
     if (!found) {
-        cout << "No contact found matching the query.\n";
+        cout << "No contact found matching your query.\n";
     }
+
+    inFile.close();
 }
+
