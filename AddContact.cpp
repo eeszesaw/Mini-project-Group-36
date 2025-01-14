@@ -1,125 +1,90 @@
+#include "AddContact.hpp"
 #include <iostream>
-#include <string>
-#include <vector>
-#include "AddContact.hpp"  
+#include <limits>
+#include "ContactManager.hpp" 
 
 using namespace std;
 
-
-struct Contact {
-    string firstName;
-    string lastName;
-    string phone;
-    string email;
-    string birthday;
-    string note;
-};
-
-
-
+// Function to validate phone number
 bool isValidPhone(const string& phone) {
-    if (phone.length() < 10 || phone.length() > 15) return false;
-    for (char c : phone) {
-        if (!isdigit(c)) return false;
+    if (phone.length() < 10 || phone.length() > 15) {
+        cout << "Phone number must be between 10 and 15 digits.\n";
+        return false;
+    }
+    for (char ch : phone) {
+        if (!isdigit(ch)) {
+            cout << "Phone number must only contain digits.\n";
+            return false;
+        }
     }
     return true;
 }
 
+// Function to validate email
 bool isValidEmail(const string& email) {
     size_t atPos = email.find('@');
-    size_t dotPos = email.find('.', atPos + 1);
-    if (atPos == string::npos || dotPos == string::npos) return false;
-    if (atPos == 0 || dotPos == atPos + 1) return false;
-    if (dotPos == email.length() - 1) return false;
-    return true;
-}
-
-bool isValidDate(const string& date) {
-    if (date.length() != 10) return false;
-    if (date[4] != '-' || date[7] != '-') return false;
-
-    string year = date.substr(0, 4);
-    string month = date.substr(5, 2);
-    string day = date.substr(8, 2);
-
-    for (char c : year + month + day) {
-        if (!isdigit(c)) return false;
-    }
-
-    int monthNum = stoi(month);
-    int dayNum = stoi(day);
-
-    if (monthNum < 1 || monthNum > 12 || dayNum < 1 || dayNum > 31) return false;
-
-    return true;
-}
-
-void getInput(string& input, const string& prompt) {
-    cout << prompt;
-    getline(cin, input);
-}
-
-void displayContact(const Contact& contact) {
-    cout << "\nContact Details:\n";
-    cout << "First Name: " << contact.firstName << "\n"
-         << "Last Name: " << contact.lastName << "\n"
-         << "Phone: " << contact.phone << "\n"
-         << "Email: " << contact.email << "\n"
-         << "Birthday: " << contact.birthday << "\n"
-         << "Note: " << contact.note << "\n";
-}
-
-bool validateInput(const string& input, bool(*validationFn)(const string&), const string& errorMessage) {
-    if (!validationFn(input)) {
-        cout << errorMessage << endl;
+    size_t dotPos = email.find('.', atPos);
+    if (atPos == string::npos || dotPos == string::npos) {
+        cout << "Invalid email format.\n";
         return false;
     }
     return true;
 }
 
-void addContact(vector<Contact>& contacts) {
-    Contact newContact;
-    string input;
-
-    
-    getInput(newContact.firstName, "Enter First Name: ");
-    getInput(newContact.lastName, "Enter Last Name: ");
-
-    
-    do {
-        getInput(input, "Enter Phone Number (10-15 digits): ");
-    } while (!validateInput(input, isValidPhone, "Invalid phone number. Please try again."));
-    newContact.phone = input;
-
-    
-    do {
-        getInput(input, "Enter Email: ");
-    } while (!validateInput(input, isValidEmail, "Invalid email address. Please try again."));
-    newContact.email = input;
-
-    
-    do {
-        getInput(input, "Enter Birthday (YYYY-MM-DD): ");
-    } while (!validateInput(input, isValidDate, "Invalid date format. Please try again."));
-    newContact.birthday = input;
-
-    
-    getInput(newContact.note, "Enter Note: ");
-
-    
-    contacts.push_back(newContact);
-    cout << "\nContact added successfully!\n";
-
-    
-    displayContact(newContact);
+// Function to validate birthday format
+bool isValidBirthday(const string& birthday) {
+    if (birthday.length() != 10 || birthday[4] != '-' || birthday[7] != '-') {
+        cout << "Birthday must be in the format YYYY-MM-DD.\n";
+        return false;
+    }
+    for (char ch : birthday) {
+        if (ch != '-' && !isdigit(ch)) {
+            cout << "Birthday must contain only digits and dashes.\n";
+            return false;
+        }
+    }
+    return true;
 }
 
-int main() {
-    vector<Contact> contacts; // List to store all contacts
+// Function to add a contact
+void addContact() {
+    string firstName, lastName, phone, email, birthday, note;
 
-    cout << "=== Add New Contact ===\n";
-    addContact(contacts); // Call the addContact function
+    cout << "Enter First Name: ";
+    cin >> firstName;
 
-    return 0;
+    cout << "Enter Last Name: ";
+    cin >> lastName;
+
+    do {
+        cout << "Enter Phone Number (10-15 digits): ";
+        cin >> phone;
+    } while (!isValidPhone(phone));
+
+    do {
+        cout << "Enter Email: ";
+        cin >> email;
+    } while (!isValidEmail(email));
+
+    do {
+        cout << "Enter Birthday (YYYY-MM-DD): ";
+        cin >> birthday;
+    } while (!isValidBirthday(birthday));
+
+    cout << "Enter Note (Optional): ";
+    cin.ignore();
+    getline(cin, note);
+
+    // Create a Contact object
+    Contact newContact(firstName, lastName, phone, email, birthday, note);
+
+    // Create ContactManager object and pass the contact
+    ContactManager manager;
+    manager.addContact(newContact);  // Call addContact with a valid Contact object
+
+    cout << "Contact added successfully!\n";
 }
 
+
+
+  
