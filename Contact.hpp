@@ -2,54 +2,40 @@
 #define CONTACT_HPP
 
 #include <string>
-#include <iostream>
+using namespace std;
 
 class Contact {
-private:
-    std::string firstName;
-    std::string lastName;
-    std::string phone;
-    std::string email;
-
 public:
-    // Constructor
-    Contact(const std::string& firstName = "",
-            const std::string& lastName = "",
-            const std::string& phone = "",
-            const std::string& email = "")
-        : firstName(firstName), lastName(lastName), phone(phone), email(email) {}
+    
+    Contact(const string& firstName, const string& lastName, const string& phone, const string& email,
+            const string& birthday, const string& note);
 
-    // Getters
-    std::string getFullName() const {
-        return firstName + " " + lastName;
-    }
-    std::string getPhone() const {
-        return phone;
-    }
-    std::string getEmail() const {
-        return email;
-    }
+    
+    string getFirstName() const;
+    string getLastName() const;
+    string getPhone() const;
+    string getEmail() const;
+    string getBirthday() const;
+    string getNote() const;
 
-    // Setters
-    void setFirstName(const std::string& firstName) {
-        this->firstName = firstName;
-    }
-    void setLastName(const std::string& lastName) {
-        this->lastName = lastName;
-    }
-    void setPhone(const std::string& phone) {
-        this->phone = phone;
-    }
-    void setEmail(const std::string& email) {
-        this->email = email;
-    }
+    
+    void setFirstName(const string& firstName);
+    void setLastName(const string& lastName);
+    void setPhone(const string& phone);
+    void setEmail(const string& email);
+    void setBirthday(const string& birthday);
+    void setNote(const string& note);
 
-    // Display contact information
-    void display() const {
-        std::cout << "Name: " << firstName << " " << lastName << "\n";
-        std::cout << "Phone: " << phone << "\n";
-        std::cout << "Email: " << email << "\n";
-    }
+    // Display method
+    void display() const;
+
+private:
+    string firstName;
+    string lastName;
+    string phone;
+    string email;
+    string birthday;
+    string note;
 };
 
-#endif // CONTACT_HPP
+#endif 
