@@ -1,16 +1,6 @@
-#include <string>
+#ifndef VIEWCONTACT_HPP
+#define VIEWCONTACT_HPP
 
-using namespace std; 
+void viewContact();
 
-class Contact {
-public:
-    string name;
-    string phone_number;
-    string email;
-    string birthday;
-    string note;
-
-    Contact();
-    Contact(const string& name, const string& phone, const string& email, const string& birthday, const string& note);
-    void display() const;
-};
+#endif 
