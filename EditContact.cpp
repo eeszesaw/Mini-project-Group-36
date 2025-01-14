@@ -1,51 +1,56 @@
 #include "EditContact.hpp"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
 
-Contact::Contact(std::string n, std::string p, std::string e) : name(n), phoneNumber(p), email(e) {}
+using namespace std;
 
-void ContactDirectory::editContact(const std::string& name) {
-    auto it = contacts.find(name);
-    if (it != contacts.end()) {
-        int choice;
-        std::cout << "Editing contact: " << it->second.name << "\n";
-        std::cout << "1. Edit Name\n";
-        std::cout << "2. Edit Phone Number\n";
-        std::cout << "3. Edit Email\n";
-        std::cout << "Choose an option (1-3): ";
-        std::cin >> choice;
+void editContact() {
+    string phone;
+    cout << "Enter phone number of the contact you want to edit: ";
+    cin >> phone;
 
-        std::cin.ignore(); 
+    ifstream inFile("contacts.txt");
+    vector<string> contacts;
+    string line;
+    bool found = false;
 
-        switch (choice) {
-            case 1: {
-                std::string newName;
-                std::cout << "Enter new name: ";
-                std::getline(std::cin, newName);
-                it->second.name = newName;
-                contacts[newName] = it->second; 
-                contacts.erase(it); 
-                std::cout << "Name updated successfully.\n";
-                break;
-            }
-            case 2: {
-                std::string newPhoneNumber;
-                std::cout << "Enter new phone number: ";
-                std::getline(std::cin, newPhoneNumber);
-                it->second.phoneNumber = newPhoneNumber;
-                std::cout << "Phone number updated successfully.\n";
-                break;
-            }
-            case 3: {
-                std::string newEmail;
-                std::cout << "Enter new email: ";
-                std::getline(std::cin, newEmail);
-                it->second.email = newEmail;
-                std::cout << "Email updated successfully.\n";
-                break;
-            }
-            default:
-                std::cout << "Invalid choice.\n";
-        }
-    } else {
-        std::cout << "Contact not found.\n";
+    while (getline(inFile, line)) {
+        contacts.push_back(line);
     }
+    inFile.close();
+
+    ofstream outFile("contacts.txt");
+    for (auto& contact : contacts) {
+        stringstream ss(contact);
+        string firstName, lastName, cPhone, email, birthday, note;
+        ss >> firstName >> lastName >> cPhone >> email >> birthday;
+        getline(ss, note);
+
+        if (cPhone == phone) {
+            found = true;
+            cout << "Editing contact:\n";
+            cout << "Enter new name: ";
+            cin >> firstName >> lastName;
+            cout << "Enter new email: ";
+            cin >> email;
+            cout << "Enter new birthday: ";
+            cin >> birthday;
+            cout << "Enter new note: ";
+            cin.ignore();
+            getline(cin, note);
+            outFile << firstName << " " << lastName << " " << cPhone << " " << email << " " << birthday << " " << note << endl;
+        } else {
+            outFile << contact << endl;
+        }
+    }
+
+    if (!found) {
+        cout << "Contact not found!\n";
+    } else {
+        cout << "Contact updated successfully.\n";
+    }
+
+    outFile.close();
 }
