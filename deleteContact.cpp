@@ -1,24 +1,44 @@
+#include "DeleteContact.hpp"
 #include <iostream>
+#include <fstream>
 #include <vector>
-#include <string>
-#include <algorithm>
+#include <sstream>
 
 using namespace std;
 
-extern vector<Contact> contacts;
-
 void deleteContact() {
-    string name;
-    cout << "Enter the full name of the contact to delete: ";  // Prompt for first and last name
-    getline(cin, name);
+    string phone;
+    cout << "Enter the phone number of the contact to delete: ";
+    cin >> phone;
 
-    auto it = remove_if(contacts.begin(), contacts.end(),
-                        [&name](const Contact& c) { return c.name == name; });
-    if (it != contacts.end()) {
-        contacts.erase(it, contacts.end());
-        cout << "Contact deleted successfully!\n";
-    } else {
-        cout << "Contact not found.\n";
+    ifstream inFile("contacts.txt");
+    vector<string> contacts;
+    string line;
+    bool found = false;
+
+    while (getline(inFile, line)) {
+        contacts.push_back(line);
     }
-}
+    inFile.close();
 
+    ofstream outFile("contacts.txt");
+    for (auto& contact : contacts) {
+        stringstream ss(contact);
+        string firstName, lastName, cPhone, email, birthday, note;
+        ss >> firstName >> lastName >> cPhone >> email >> birthday;
+        getline(ss, note);
+
+        if (cPhone != phone) {
+            outFile << contact << endl;
+        } else {
+            found = true;
+            cout << "Contact deleted successfully.\n";
+        }
+    }
+
+    if (!found) {
+        cout << "Contact not found!\n";
+    }
+
+    outFile.close();
+}
