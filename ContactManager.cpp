@@ -1,89 +1,92 @@
 #include "ContactManager.hpp"
-#include "Contact.hpp"
-#include <fstream>
 #include <iostream>
-#include <algorithm>
+#include <fstream>
 
 using namespace std;
 
+// Add a contact
 void ContactManager::addContact(const Contact& contact) {
     contacts.push_back(contact);
+    cout << "Contact added successfully!" << endl;
 }
 
-void ContactManager::viewAllContacts() const {
-    for (const auto& contact : contacts) {
-        contact.display();
-        cout << "-------------------------\n";
-    }
-}
-
-Contact* ContactManager::searchContact(const string& fullName) {
-    for (auto& contact : contacts) {
-        if (contact.getFullName() == fullName) { // Match full name
-            return &contact;
+// View all contacts
+void ContactManager::viewAllContacts() {
+    if (contacts.empty()) {
+        cout << "No contacts to display.\n";
+    } else {
+        for (const auto& contact : contacts) {
+            contact.display();
         }
     }
-    return nullptr;
 }
 
-bool ContactManager::editContact(const string& fullName) {
-    Contact* contact = searchContact(fullName);
-    if (contact) {
-        string newFirstName, newLastName, newPhone, newEmail;
-        cout << "Enter new first name: ";
-        getline(cin, newFirstName);
-        cout << "Enter new last name: ";
-        getline(cin, newLastName);
-        cout << "Enter new phone: ";
-        getline(cin, newPhone);
-        cout << "Enter new email: ";
-        getline(cin, newEmail);
-        contact->firstName = newFirstName;
-        contact->lastName = newLastName;
-        contact->phone = newPhone;
-        contact->email = newEmail;
-        return true;
-    }
-    return false;
-}
-
-bool ContactManager::deleteContact(const string& fullName) {
-    auto it = remove_if(contacts.begin(), contacts.end(),
-                        [&](const Contact& c) { return c.getFullName() == fullName; }); // Match full name
-    if (it != contacts.end()) {
-        contacts.erase(it, contacts.end());
-        return true;
-    }
-    return false;
-}
-
-void ContactManager::saveToFile(const string& filename) const {
-    ofstream outFile(filename);
-    if (!outFile) {
-        cerr << "Error opening file for writing: " << filename << '\n';
-        return;
-    }
-
+// Search for a contact by name or phone number
+void ContactManager::searchContact(const string& query) {
+    bool found = false;
     for (const auto& contact : contacts) {
-        outFile << contact.firstName << '\n'
-                << contact.lastName << '\n'
-                << contact.phone << '\n'
-                << contact.email << '\n';
+        if (contact.getFirstName() == query || contact.getLastName() == query || contact.getPhone() == query) {
+            contact.display();
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "No matching contacts found.\n";
     }
 }
 
-void ContactManager::loadFromFile(const string& filename) {
-    ifstream inFile(filename);
-    if (!inFile) {
-        cerr << "Error opening file for reading: " << filename << '\n';
-        return;
+// Edit a contact by phone number
+void ContactManager::editContact(const string& phone) {
+    for (auto& contact : contacts) {
+        if (contact.getPhone() == phone) {
+            string firstName, lastName, email, birthday, note;
+            cout << "Enter new First Name: ";
+            getline(cin, firstName);
+            cout << "Enter new Last Name: ";
+            getline(cin, lastName);
+            cout << "Enter new Email: ";
+            getline(cin, email);
+            cout << "Enter new Birthday (YYYY-MM-DD): ";
+            getline(cin, birthday);
+            cout << "Enter new Note: ";
+            getline(cin, note);
+
+            contact.setFirstName(firstName);
+            contact.setLastName(lastName);
+            contact.setEmail(email);
+            contact.setBirthday(birthday);
+            contact.setNote(note);
+
+            cout << "Contact updated successfully!" << endl;
+            return;
+        }
     }
 
-    string firstName, lastName, phone, email;
-    while (getline(inFile, firstName) &&
-           getline(inFile, lastName) &&
-           getline(inFile, phone) &&
-           getline(inFile, email)) {
-        contacts.emplace_back(Contact{firstName, lastName, phone, email});
+    cout << "Contact with phone number " << phone << " not found.\n";
+}
+
+// Delete a contact by phone number
+void ContactManager::deleteContact(const string& phone) {
+    for (auto it = contacts.begin(); it != contacts.end(); ++it) {
+        if (it->getPhone() == phone) {
+            contacts.erase(it);
+            cout << "Contact deleted successfully!" << endl;
+            return;
+        }
     }
+
+    cout << "Contact with phone number " << phone << " not found.\n";
+}
+
+// Load contacts from a file 
+bool ContactManager::loadContacts() {
+    
+    return true;
+}
+
+// Save contacts to a file 
+bool ContactManager::saveContacts() {
+    
+    return true;
 }
