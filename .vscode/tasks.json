@@ -11,7 +11,7 @@
                 "Contact.cpp",
                 "ContactManager.cpp",
                 "-o",
-                "program.exe",
+                "${workspaceFolder}/bin/program.exe",
                 "-Wall",
                 "-Wconversion"
             ],
