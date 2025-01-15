@@ -7,7 +7,7 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -O2
 SRC = main.cpp \
       AddContact.cpp \
       ContactManager.cpp \
-      deleteContact.cpp \
+      DeleteContact.cpp \
       EditContact.cpp \
       ViewContact.cpp \
       SearchContact.cpp
