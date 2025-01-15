@@ -7,14 +7,16 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "main.cpp",
+                "Contact.cpp",
+                "ContactManager.cpp",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "program.exe",
                 "-Wall",
                 "-Wconversion"
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
