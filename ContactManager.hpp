@@ -6,16 +6,18 @@
 
 class ContactManager {
 public:
-    void addContact(const Contact& contact);
+    void addContact(const Contact& newContact);
     void viewAllContacts();
     void searchContact(const std::string& query);
-    void editContact(const std::string& phone);
-    void deleteContact(const std::string& phone);
+    void editContact(const std::string& fullName);
+    void deleteContact(const std::string& fullName);
     bool loadContacts(const std::string& filename);
-    bool saveContacts(const std::string& filename);
+    bool saveContacts(const Contact& newContact, const std::string& filename);
 
 private:
-    std::vector<Contact> contacts;
+    std::vector<Contact> contacts;  // Stores all contacts in memory
+    const std::string filename = "contacts.txt";
+    void saveAllContacts();  // Save all contacts to file
 };
 
 #endif 

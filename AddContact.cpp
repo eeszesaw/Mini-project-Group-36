@@ -80,7 +80,16 @@ void addContact() {
 
     // Create ContactManager object and pass the contact
     ContactManager manager;
-    manager.addContact(newContact);  // Call addContact with a valid Contact object
+
+    if (!manager.loadContacts("contacts.txt")) {
+        cerr << "Failed to load existing contacts. Starting fresh.\n";
+    }
+
+    // Add the new contact
+    manager.addContact(newContact);  
+
+    // Save all contacts to the file
+    manager.saveAllContacts();
 
     cout << "Contact added successfully!\n";
 }

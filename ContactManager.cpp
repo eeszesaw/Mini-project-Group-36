@@ -7,8 +7,9 @@
 using namespace std;
 
 // Add a contact
-void ContactManager::addContact(const Contact& contact) {
-    contacts.push_back(contact);
+void ContactManager::addContact(const Contact& newContact) {
+    contacts.push_back(newContact);
+    saveAllContacts(); 
     cout << "Contact added successfully!" << endl;
 }
 
@@ -112,7 +113,7 @@ bool ContactManager::loadContacts(const string& filename) {
 }
 
 // Save contacts to a file
-bool ContactManager::saveContacts(const string& filename) {
+bool ContactManager::saveContacts(const Contact& newContact, const string& filename) {
     ofstream file(filename);
     if (!file) {
         cerr << "Error: Could not open " << filename << " for writing." << endl;
@@ -130,4 +131,23 @@ bool ContactManager::saveContacts(const string& filename) {
 
     file.close();
     return true;
+}
+
+void ContactManager::saveAllContacts() {
+    ofstream outFile("contacts.txt", std::ios::trunc);  // Use the member variable `filename` for the file name
+    if (!outFile) {
+        cerr << "Error: Could not open " << filename << " for writing.\n";
+        return;
+    }
+
+    for (const auto& contact : contacts) {
+        outFile << contact.getFirstName() << ","
+                << contact.getLastName() << ","
+                << contact.getPhone() << ","
+                << contact.getEmail() << ","
+                << contact.getBirthday() << ","
+                << contact.getNote() << endl;
+    }
+
+    outFile.close();
 }

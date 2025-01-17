@@ -9,9 +9,15 @@ using namespace std;
 void editContact() {
     string fullName;
     cout << "Enter full name of the contact you want to edit: ";
-    cin >> fullName;
-
+    cin.ignore();  // to clear the input buffer before reading the full name
+    getline(cin, fullName);  // Use getline to capture full names with spaces
+    
     ifstream inFile("contacts.txt");
+    if (!inFile) {
+        cout << "Error opening file.\n";
+        return;
+    }
+
     vector<string> contacts;
     string line;
     bool found = false;
@@ -21,7 +27,12 @@ void editContact() {
     }
     inFile.close();
 
-    ofstream outFile("contacts.txt");
+    ofstream outFile("contacts.txt", ios::trunc);
+    if (!outFile) {
+        cout << "Error opening file for writing.\n";
+        return;
+    }
+    
     for (auto& contact : contacts) {
         stringstream ss(contact);
         string firstName, lastName, cPhone, email, birthday, note;
@@ -44,6 +55,7 @@ void editContact() {
             cout << "Enter new note: ";
             cin.ignore();
             getline(cin, note);
+
             outFile << firstName << " " << lastName << " " << cPhone << " " << email << " " << birthday << " " << note << endl;
         } else {
             outFile << contact << endl;

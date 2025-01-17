@@ -13,6 +13,11 @@ void deleteContact() {
     getline(cin, fullName);
 
     ifstream inFile("contacts.txt");
+    if (!inFile) {
+        cout << "Error opening file.\n";
+        return;
+    }
+
     vector<string> contacts;
     string line;
     bool found = false;
@@ -22,7 +27,12 @@ void deleteContact() {
     }
     inFile.close();
 
-    ofstream outFile("contacts.txt");
+    ofstream outFile("contacts.txt", ios::trunc);
+     if (!outFile) {
+        cout << "Error opening file for writing.\n";
+        return;
+    }
+
     for (const auto& contact : contacts) {
         stringstream ss(contact);
         string firstName, lastName, cPhone, email, birthday, note;
