@@ -80,13 +80,13 @@ void ContactManager::deleteContact(const string& phone) {
 }
 
 // Load contacts from a file 
-bool ContactManager::loadContacts() {
+bool ContactManager::loadContacts(const string& filename) {
     
     return true;
 }
 
 // Save contacts to a file 
-bool ContactManager::saveContacts() {
+bool ContactManager::saveContacts(const string& filename) {
     
     return true;
 }

@@ -4,6 +4,8 @@ using namespace std;
 
 int main() {
     ContactManager manager;
+    string filename = "contacts.xtx";
+    manager.loadContacts(filename);
     int choice;
 
     do {
