@@ -7,9 +7,9 @@
 using namespace std;
 
 void editContact() {
-    string phone;
-    cout << "Enter phone number of the contact you want to edit: ";
-    cin >> phone;
+    string fullName;
+    cout << "Enter full name of the contact you want to edit: ";
+    cin >> fullName;
 
     ifstream inFile("contacts.txt");
     vector<string> contacts;
@@ -28,11 +28,15 @@ void editContact() {
         ss >> firstName >> lastName >> cPhone >> email >> birthday;
         getline(ss, note);
 
-        if (cPhone == phone) {
+        if ((firstName + " " + lastName) == fullName) {
             found = true;
             cout << "Editing contact:\n";
-            cout << "Enter new name: ";
-            cin >> firstName >> lastName;
+            cout << "Enter new First Name: ";
+            cin >> firstName;
+            cout << "Enter new Last Name: ";
+            cin >> lastName;
+            cout << "Enter new Phone: ";
+            cin >> cPhone;
             cout << "Enter new email: ";
             cin >> email;
             cout << "Enter new birthday: ";

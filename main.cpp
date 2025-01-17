@@ -4,8 +4,12 @@ using namespace std;
 
 int main() {
     ContactManager manager;
-    string filename = "contacts.xtx";
-    manager.loadContacts(filename);
+    const string filename = "contacts.txt";
+
+    // Load contacts at the start
+    if (!manager.loadContacts(filename)) {
+        cout << "No existing contacts found. Starting fresh.\n";
+    }
     int choice;
 
     do {
@@ -41,28 +45,35 @@ int main() {
                 break;
             }
             case 2: {
-                string phone;
-                cout << "Enter phone number of contact to edit: ";
-                getline(cin, phone);
-                manager.editContact(phone);
+                string fullname;
+                cout << "Enter full name of contact to edit: ";
+                getline(cin, fullname);
+                cout << endl;
+                manager.editContact(fullname);
+                cout << endl;
                 break;
             }
             case 3: {
-                string phone;
-                cout << "Enter phone number of contact to delete: ";
-                getline(cin, phone);
-                manager.deleteContact(phone);
+                string fullname;
+                cout << "Enter full name of contact to delete: ";
+                getline(cin, fullname);
+                cout << endl;
+                manager.deleteContact(fullname);
+                cout << endl;
                 break;
             }
             case 4: {
                 string query;
                 cout << "Enter name or phone number to search: ";
                 getline(cin, query);
+                cout << endl;
                 manager.searchContact(query);
+                cout << endl;
                 break;
             }
             case 5:
                 manager.viewAllContacts();
+                cout << endl;
                 break;
             case 6:
                 cout << "Exiting program...\n";

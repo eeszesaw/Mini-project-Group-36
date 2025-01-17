@@ -7,9 +7,10 @@
 using namespace std;
 
 void deleteContact() {
-    string phone;
-    cout << "Enter the phone number of the contact to delete: ";
-    cin >> phone;
+    string fullName;
+    cout << "Enter the full name of the contact to delete: ";
+    cin.ignore();
+    getline(cin, fullName);
 
     ifstream inFile("contacts.txt");
     vector<string> contacts;
@@ -22,13 +23,13 @@ void deleteContact() {
     inFile.close();
 
     ofstream outFile("contacts.txt");
-    for (auto& contact : contacts) {
+    for (const auto& contact : contacts) {
         stringstream ss(contact);
         string firstName, lastName, cPhone, email, birthday, note;
         ss >> firstName >> lastName >> cPhone >> email >> birthday;
         getline(ss, note);
 
-        if (cPhone != phone) {
+        if ((firstName + " " + lastName) != fullName) {
             outFile << contact << endl;
         } else {
             found = true;

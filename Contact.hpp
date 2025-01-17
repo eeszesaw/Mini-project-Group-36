@@ -13,6 +13,9 @@ public:
     
     string getFirstName() const;
     string getLastName() const;
+    string getFullName() const {
+        return firstName + " " + lastName;
+    }
     string getPhone() const;
     string getEmail() const;
     string getBirthday() const;

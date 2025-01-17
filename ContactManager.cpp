@@ -1,4 +1,6 @@
 #include "ContactManager.hpp"
+#include <sstream>  
+#include <string>
 #include <iostream>
 #include <fstream>
 
@@ -25,7 +27,7 @@ void ContactManager::viewAllContacts() {
 void ContactManager::searchContact(const string& query) {
     bool found = false;
     for (const auto& contact : contacts) {
-        if (contact.getFirstName() == query || contact.getLastName() == query || contact.getPhone() == query) {
+        if (contact.getFullName() == query || contact.getPhone() == query) {
             contact.display();
             found = true;
         }
@@ -81,12 +83,51 @@ void ContactManager::deleteContact(const string& phone) {
 
 // Load contacts from a file 
 bool ContactManager::loadContacts(const string& filename) {
-    
+    ifstream file(filename);
+    if (!file) {
+        cerr << "Error: Could not open " << filename << " for reading." << endl;
+        return false;
+    }
+
+    contacts.clear(); // Clear existing contacts
+    string line;
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string firstName, lastName, phone, email, birthday, note;
+
+        // Read fields separated by commas
+        getline(ss, firstName, ',');
+        getline(ss, lastName, ',');
+        getline(ss, phone, ',');
+        getline(ss, email, ',');
+        getline(ss, birthday, ',');
+        getline(ss, note);
+
+        contacts.emplace_back(firstName, lastName, phone, email, birthday, note);
+    }
+
+    file.close();
     return true;
 }
 
-// Save contacts to a file 
+// Save contacts to a file
 bool ContactManager::saveContacts(const string& filename) {
-    
+    ofstream file(filename);
+    if (!file) {
+        cerr << "Error: Could not open " << filename << " for writing." << endl;
+        return false;
+    }
+
+    for (const auto& contact : contacts) {
+        file << contact.getFirstName() << ","
+             << contact.getLastName() << ","
+             << contact.getPhone() << ","
+             << contact.getEmail() << ","
+             << contact.getBirthday() << ","
+             << contact.getNote() << endl;
+    }
+
+    file.close();
     return true;
 }
