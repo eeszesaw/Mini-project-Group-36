@@ -13,7 +13,7 @@ int main() {
     int choice;
 
     do {
-        cout <<"       WELCOME TO CONTACT MANAGER SYSTEM
+        cout <<“     WELCOME TO CONTACT MANAGER SYSTEM  \n"；
         cout << "=======================================\n";
         cout << "          CONTACT MANAGER MENU         \n";
         cout << "=======================================\n";
