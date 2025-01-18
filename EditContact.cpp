@@ -50,10 +50,10 @@ void editContact() {
         return;
     }
 
-    for (const auto& contact : contacts) {
+    for (auto& contact : contacts) {
         stringstream ss(contact);
-        string firstName, lastName, cPhone, email, birthday, note;
-        ss >> firstName >> lastName >> cPhone >> email >> birthday;
+        string firstName, lastName, phone, email, birthday, note;
+        ss >> firstName >> lastName >> phone >> email >> birthday;
         getline(ss, note);  // Note may contain spaces
 
         string fullNameFromFile = toLower(trim(firstName + " " + lastName));
@@ -66,7 +66,7 @@ void editContact() {
             cout << "Enter new Last Name: ";
             cin >> lastName;
             cout << "Enter new Phone: ";
-            cin >> cPhone;
+            cin >> phone;
             cout << "Enter new Email: ";
             cin >> email;
             cout << "Enter new Birthday: ";
@@ -75,7 +75,7 @@ void editContact() {
             cin.ignore();
             getline(cin, note);
 
-            outFile << firstName << " " << lastName << " " << cPhone << " " << email << " " << birthday << " " << note << endl;
+            outFile << firstName << " " << lastName << " " << phone << " " << email << " " << birthday << " " << note << endl;
         } else {
             outFile << contact << endl;  // Write the unchanged contact
         }

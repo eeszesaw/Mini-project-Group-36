@@ -39,19 +39,19 @@ void ContactManager::searchContact(const string& query) {
     }
 }
 
-// Edit a contact by phone number
+// Edit a contact by name
 void ContactManager::editContact(const string& fullName) {
     for (auto& contact : contacts) {
         string contactFullName = contact.getFirstName() + " " + contact.getLastName();
         if (contactFullName == fullName) {
-            string firstName, lastName, email, birthday, note;
+            string firstName, lastName, phone, email, birthday, note;
 
             cout << "Enter new First Name: ";
             getline(cin, firstName);
             cout << "Enter new Last Name: ";
             getline(cin, lastName);
             cout << "Enter new Phone number: ";
-            getline(cin, cPhone);
+            getline(cin, phone);
             cout << "Enter new Email: ";
             getline(cin, email);
             cout << "Enter new Birthday (YYYY-MM-DD): ";
@@ -61,26 +61,29 @@ void ContactManager::editContact(const string& fullName) {
 
             contact.setFirstName(firstName);
             contact.setLastName(lastName);
+            contact.setPhone(phone);
             contact.setEmail(email);
             contact.setBirthday(birthday);
             contact.setNote(note);
 
             cout << "Contact updated successfully!" << endl;
+            saveAllContacts();
             return;
         }
     }
 
-    cout << "Contact with phone number " << fullName << " not found.\n";
+    cout << "Contact with name " << fullName << " not found.\n";
 }
 
-// Delete a contact by phone number
+// Delete a contact by full
 void ContactManager::deleteContact(const string& fullName) {
     for (auto it = contacts.begin(); it != contacts.end(); ++it) {
         string contactFullName = it->getFirstName() + " " + it->getLastName();
         
-        if (it->getPhone() == fullName) {
+        if (it->getFullName() == fullName) {
             contacts.erase(it);
-             cout << "Contact with name '" << fullName << "' deleted successfully!" << endl;
+            cout << "Contact with name '" << fullName << "' deleted successfully!" << endl;
+            saveAllContacts();
             return;
         }
     }
@@ -120,22 +123,22 @@ bool ContactManager::loadContacts(const string& filename) {
 
 // Save contacts to a file
 bool ContactManager::saveContacts(const Contact& newContact, const string& filename) {
-    ofstream file(filename);
-    if (!file) {
+    ofstream outfile("contacts.txt", ios::trunc);
+    if (!outfile) {
         cerr << "Error: Could not open " << filename << " for writing." << endl;
         return false;
     }
 
     for (const auto& contact : contacts) {
-        file << contact.getFirstName() << ","
-             << contact.getLastName() << ","
-             << contact.getPhone() << ","
-             << contact.getEmail() << ","
-             << contact.getBirthday() << ","
-             << contact.getNote() << endl;
+        outfile << contact.getFirstName() << ","
+                << contact.getLastName() << ","
+                << contact.getPhone() << ","
+                << contact.getEmail() << ","
+                << contact.getBirthday() << ","
+                << contact.getNote() << endl;
     }
 
-    file.close();
+    outfile.close();
     return true;
 }
 

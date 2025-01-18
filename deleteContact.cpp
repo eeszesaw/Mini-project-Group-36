@@ -57,7 +57,7 @@ void deleteContact() {
 
         string fullNameFromFile = toLower(trim(firstName + " " + lastName));
 
-        // Match query with full name or phone
+        // Match query with full name 
         if (fullName != fullNameFromFile) {
             outFile << contact << endl;
         } else {
