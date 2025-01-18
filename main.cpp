@@ -13,13 +13,16 @@ int main() {
     int choice;
 
     do {
-        cout << "\n=== Contact Manager ===\n";
+        cout << "=======================================\n";
+        cout << "          CONTACT MANAGER MENU         \n";
+        cout << "=======================================\n";
         cout << "1. Add Contact\n";
         cout << "2. Edit Contact\n";
         cout << "3. Delete Contact\n";
         cout << "4. Search Contact\n";
-        cout << "5. View Contacts\n";
+        cout << "5. View All Contacts\n";
         cout << "6. Exit\n";
+        cout << "---------------------------------------\n";
         cout << "Enter your choice: ";
         cin >> choice;
         cin.ignore();  // to clear the newline character after entering a number
