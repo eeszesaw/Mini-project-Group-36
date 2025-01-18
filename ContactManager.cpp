@@ -50,6 +50,8 @@ void ContactManager::editContact(const string& fullName) {
             getline(cin, firstName);
             cout << "Enter new Last Name: ";
             getline(cin, lastName);
+            cout << "Enter new Phone number: ";
+            getline(cin, cPhone);
             cout << "Enter new Email: ";
             getline(cin, email);
             cout << "Enter new Birthday (YYYY-MM-DD): ";
