@@ -1,3 +1,6 @@
+/*Written by: SAW EE-SZE 23301850
+Function purpose: Removes a contact based on a full name*/
+
 #include "DeleteContact.hpp"
 #include <iostream>
 #include <fstream>
