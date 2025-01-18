@@ -40,10 +40,12 @@ void ContactManager::searchContact(const string& query) {
 }
 
 // Edit a contact by phone number
-void ContactManager::editContact(const string& phone) {
+void ContactManager::editContact(const string& fullName) {
     for (auto& contact : contacts) {
-        if (contact.getPhone() == phone) {
+        string contactFullName = contact.getFirstName() + " " + contact.getLastName();
+        if (contactFullName == fullName) {
             string firstName, lastName, email, birthday, note;
+
             cout << "Enter new First Name: ";
             getline(cin, firstName);
             cout << "Enter new Last Name: ";
@@ -66,20 +68,22 @@ void ContactManager::editContact(const string& phone) {
         }
     }
 
-    cout << "Contact with phone number " << phone << " not found.\n";
+    cout << "Contact with phone number " << fullName << " not found.\n";
 }
 
 // Delete a contact by phone number
-void ContactManager::deleteContact(const string& phone) {
+void ContactManager::deleteContact(const string& fullName) {
     for (auto it = contacts.begin(); it != contacts.end(); ++it) {
-        if (it->getPhone() == phone) {
+        string contactFullName = it->getFirstName() + " " + it->getLastName();
+        
+        if (it->getPhone() == fullName) {
             contacts.erase(it);
-            cout << "Contact deleted successfully!" << endl;
+             cout << "Contact with name '" << fullName << "' deleted successfully!" << endl;
             return;
         }
     }
 
-    cout << "Contact with phone number " << phone << " not found.\n";
+    cout << "Contact with name " << fullName << " not found.\n";
 }
 
 // Load contacts from a file 

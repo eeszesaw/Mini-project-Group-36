@@ -3,15 +3,31 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
+
+// Helper function to trim whitespace
+string trim(const string& str) {
+    size_t start = str.find_first_not_of(" \t");
+    size_t end = str.find_last_not_of(" \t");
+    return (start == string::npos || end == string::npos) ? "" : str.substr(start, end - start + 1);
+}
+
+// Helper function to convert string to lowercase
+string toLower(const string& str) {
+    string result = str;
+    transform(result.begin(), result.end(), result.begin(), ::tolower);
+    return result;
+}
 
 void editContact() {
     string fullName;
     cout << "Enter full name of the contact you want to edit: ";
-    cin.ignore();  // to clear the input buffer before reading the full name
-    getline(cin, fullName);  // Use getline to capture full names with spaces
-    
+    cin.ignore();  // Clear the input buffer
+    getline(cin, fullName);  // Capture the full name
+    fullName = toLower(trim(fullName));  // Normalize the input
+
     ifstream inFile("contacts.txt");
     if (!inFile) {
         cout << "Error opening file.\n";
@@ -22,6 +38,7 @@ void editContact() {
     string line;
     bool found = false;
 
+    // Read all lines from the file
     while (getline(inFile, line)) {
         contacts.push_back(line);
     }
@@ -32,14 +49,16 @@ void editContact() {
         cout << "Error opening file for writing.\n";
         return;
     }
-    
-    for (auto& contact : contacts) {
+
+    for (const auto& contact : contacts) {
         stringstream ss(contact);
         string firstName, lastName, cPhone, email, birthday, note;
         ss >> firstName >> lastName >> cPhone >> email >> birthday;
-        getline(ss, note);
+        getline(ss, note);  // Note may contain spaces
 
-        if ((firstName + " " + lastName) == fullName) {
+        string fullNameFromFile = toLower(trim(firstName + " " + lastName));
+
+        if (fullNameFromFile == fullName) {
             found = true;
             cout << "Editing contact:\n";
             cout << "Enter new First Name: ";
@@ -48,17 +67,17 @@ void editContact() {
             cin >> lastName;
             cout << "Enter new Phone: ";
             cin >> cPhone;
-            cout << "Enter new email: ";
+            cout << "Enter new Email: ";
             cin >> email;
-            cout << "Enter new birthday: ";
+            cout << "Enter new Birthday: ";
             cin >> birthday;
-            cout << "Enter new note: ";
+            cout << "Enter new Note: ";
             cin.ignore();
             getline(cin, note);
 
             outFile << firstName << " " << lastName << " " << cPhone << " " << email << " " << birthday << " " << note << endl;
         } else {
-            outFile << contact << endl;
+            outFile << contact << endl;  // Write the unchanged contact
         }
     }
 

@@ -23,6 +23,7 @@ void viewContact() {
         cout << "Birthday: " << birthday << endl;
         cout << "Note: " << note << endl;
         cout << "-------------------------\n";
+        cout << endl;
     }
     inFile.close();
 }
