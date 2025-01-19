@@ -1,5 +1,7 @@
 #include <iostream>
 #include "ContactManager.hpp"
+#include "AddContact.hpp"  // Include the header for the addContact function
+
 using namespace std;
 
 int main() {
@@ -10,10 +12,10 @@ int main() {
     if (!manager.loadContacts(filename)) {
         cout << "No existing contacts found. Starting fresh.\n";
     }
+
     int choice;
 
     do {
-        cout <<“     WELCOME TO CONTACT MANAGER SYSTEM  \n"；
         cout << "=======================================\n";
         cout << "          CONTACT MANAGER MENU         \n";
         cout << "=======================================\n";
@@ -29,55 +31,33 @@ int main() {
         cin.ignore();  // to clear the newline character after entering a number
 
         switch (choice) {
-            case 1: {
-                string firstName, lastName, phone, email, birthday, note;
-                cout << "Enter First Name: ";
-                getline(cin, firstName);
-                cout << "Enter Last Name: ";
-                getline(cin, lastName);
-                cout << "Enter Phone: ";
-                getline(cin, phone);
-                cout << "Enter Email: ";
-                getline(cin, email);
-                cout << "Enter Birthday (YYYY-MM-DD): ";
-                getline(cin, birthday);
-                cout << "Enter Note: ";
-                getline(cin, note);
-
-                Contact newContact(firstName, lastName, phone, email, birthday, note);
-                manager.addContact(newContact);
+            case 1:
+                addContact(manager);  // Call the addContact function
                 break;
-            }
             case 2: {
                 string fullname;
                 cout << "Enter full name of contact to edit: ";
                 getline(cin, fullname);
                 cout << endl;
                 manager.editContact(fullname);
-                cout << endl;
                 break;
             }
             case 3: {
                 string fullname;
                 cout << "Enter full name of contact to delete: ";
                 getline(cin, fullname);
-                cout << endl;
                 manager.deleteContact(fullname);
-                cout << endl;
                 break;
             }
             case 4: {
                 string query;
                 cout << "Enter name or phone number to search: ";
                 getline(cin, query);
-                cout << endl;
                 manager.searchContact(query);
-                cout << endl;
                 break;
             }
             case 5:
                 manager.viewAllContacts();
-                cout << endl;
                 break;
             case 6:
                 cout << "Exiting program...\n";
@@ -90,3 +70,4 @@ int main() {
 
     return 0;
 }
+
