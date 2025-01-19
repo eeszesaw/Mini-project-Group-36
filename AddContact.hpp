@@ -1,8 +1,9 @@
 #ifndef ADDCONTACT_HPP
 #define ADDCONTACT_HPP
 
-#include <string>
+#include "ContactManager.hpp"  // Include ContactManager to work with contacts
 
-void addContact();  // Function to interact with user and add contact
+// Function to add a new contact
+void addContact(ContactManager& manager);
 
-#endif 
+#endif
