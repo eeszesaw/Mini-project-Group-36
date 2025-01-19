@@ -1,7 +1,8 @@
-#include "AddContact.hpp"
 #include <iostream>
 #include <limits>
-#include "ContactManager.hpp" 
+#include "AddContact.hpp"
+#include "Contact.hpp"  // Include the Contact class
+#include "ContactManager.hpp"
 
 using namespace std;
 
@@ -46,8 +47,8 @@ bool isValidBirthday(const string& birthday) {
     return true;
 }
 
-// Function to add a contact
-void addContact() {
+// Function to add a new contact
+void addContact(ContactManager& manager) {
     string firstName, lastName, phone, email, birthday, note;
 
     cout << "Enter First Name: ";
@@ -78,22 +79,11 @@ void addContact() {
     // Create a Contact object
     Contact newContact(firstName, lastName, phone, email, birthday, note);
 
-    // Create ContactManager object and pass the contact
-    ContactManager manager;
-
-    if (!manager.loadContacts("contacts.txt")) {
-        cerr << "Failed to load existing contacts. Starting fresh.\n";
-    }
-
-    // Add the new contact
-    manager.addContact(newContact);  
+    // Add the new contact to the manager
+    manager.addContact(newContact);
 
     // Save all contacts to the file
     manager.saveAllContacts();
 
     cout << "Contact added successfully!\n";
 }
-
-
-
-  
