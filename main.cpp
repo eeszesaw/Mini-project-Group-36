@@ -20,9 +20,22 @@ void clearScreen() {
 #endif
 }
 
+// Function to show a welcome message
+void showWelcomeMessage() {
+    clearScreen();
+    std::cout << "=======================================\n";
+    std::cout << "       WELCOME TO CONTACT MANAGER       \n";
+    std::cout << "=======================================\n";
+    std::cout << "   Manage your contacts efficiently!    \n";
+    std::cout << "---------------------------------------\n";
+    std::cout << "      Loading the system, please wait...\n";
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    clearScreen();
+}
+
 // Function to display the main menu
 void displayMenu() {
-    clearScreen(); // Ensure the screen is cleared before displaying the menu
+    clearScreen();
     std::cout << "=======================================\n";
     std::cout << "        CONTACT MANAGEMENT SYSTEM      \n";
     std::cout << "=======================================\n";
@@ -50,9 +63,11 @@ void showLoadingScreen(const std::string& message, int durationMs = 1500) {
 int main() {
     ContactManager manager;
 
-    clearScreen();
-    showLoadingScreen("Loading contacts");
+    // Show the welcome message
+    showWelcomeMessage();
 
+    // Load contacts
+    showLoadingScreen("Loading contacts");
     if (manager.loadContacts("contacts.txt")) {
         std::cout << "Contacts loaded successfully.\n\n";
     } else {
@@ -61,7 +76,7 @@ int main() {
 
     int choice;
     while (true) {
-        displayMenu(); // clearScreen is already called inside displayMenu
+        displayMenu();
 
         if (!(std::cin >> choice)) {
             std::cin.clear();
@@ -79,7 +94,7 @@ int main() {
             break;
         case 2:
             clearScreen();
-            manager.viewAllContacts(); // Call directly since it returns void
+            manager.viewAllContacts();
             break;
         case 3:
             clearScreen();
