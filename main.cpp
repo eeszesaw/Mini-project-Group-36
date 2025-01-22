@@ -22,6 +22,7 @@ void clearScreen() {
 
 // Function to display the main menu
 void displayMenu() {
+    clearScreen(); // Ensure the screen is cleared before displaying the menu
     std::cout << "=======================================\n";
     std::cout << "        CONTACT MANAGEMENT SYSTEM      \n";
     std::cout << "=======================================\n";
@@ -48,21 +49,19 @@ void showLoadingScreen(const std::string& message, int durationMs = 1500) {
 
 int main() {
     ContactManager manager;
-    const std::string filename = "contacts.csv";
 
     clearScreen();
     showLoadingScreen("Loading contacts");
 
-    if (manager.loadFromFile(filename)) {
-        std::cout << "Contacts loaded successfully.\n";
+    if (manager.loadContacts("contacts.txt")) {
+        std::cout << "Contacts loaded successfully.\n\n";
     } else {
-        std::cout << "No existing contacts found. Starting fresh.\n";
+        std::cout << "No existing contacts found. Starting fresh.\n\n";
     }
 
     int choice;
     while (true) {
-        clearScreen();
-        displayMenu();
+        displayMenu(); // clearScreen is already called inside displayMenu
 
         if (!(std::cin >> choice)) {
             std::cin.clear();
@@ -80,29 +79,46 @@ int main() {
             break;
         case 2:
             clearScreen();
-            viewContacts(manager);
+            manager.viewAllContacts(); // Call directly since it returns void
             break;
         case 3:
             clearScreen();
-            editContact(manager);
+            {
+                std::string fullName;
+                std::cout << "Enter the full name of the contact to edit: ";
+                std::getline(std::cin, fullName);
+                manager.editContact(fullName);
+            }
             break;
         case 4:
             clearScreen();
-            deleteContact(manager);
+            {
+                std::string fullName;
+                std::cout << "Enter the full name of the contact to delete: ";
+                std::getline(std::cin, fullName);
+                manager.deleteContact(fullName);
+            }
             break;
         case 5:
             clearScreen();
-            searchContact(manager);
+            {
+                std::string query;
+                std::cout << "Enter search query: ";
+                std::getline(std::cin, query);
+                manager.searchContact(query);
+            }
             break;
         case 6:
             clearScreen();
             showLoadingScreen("Saving contacts");
-            if (manager.saveToFile(filename)) {
-                std::cout << "Contacts saved successfully. Goodbye!\n";
-            }
+            manager.saveAllContacts();
+            std::cout << "Contacts saved successfully. Goodbye!\n";
             return 0;
         default:
             std::cout << "Invalid choice. Please select an option from 1 to 6.\n";
         }
+
+        std::cout << "\nPress Enter to return to the main menu...";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
