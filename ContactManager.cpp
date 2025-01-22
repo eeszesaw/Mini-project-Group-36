@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
 using namespace std;
 
@@ -75,7 +76,7 @@ void ContactManager::editContact(const string& fullName) {
     cout << "Contact with name " << fullName << " not found.\n";
 }
 
-// Delete a contact by full
+// Delete a contact by full name
 void ContactManager::deleteContact(const string& fullName) {
     for (auto it = contacts.begin(); it != contacts.end(); ++it) {
         string contactFullName = it->getFirstName() + " " + it->getLastName();
@@ -93,6 +94,7 @@ void ContactManager::deleteContact(const string& fullName) {
 
 // Load contacts from a file 
 bool ContactManager::loadContacts(const string& filename) {
+    cout << "Attempting to load contacts from file: " << filesystem::absolute(filename) << endl;
     ifstream file(filename);
     if (!file) {
         cerr << "Error: Could not open " << filename << " for reading." << endl;
@@ -101,51 +103,35 @@ bool ContactManager::loadContacts(const string& filename) {
 
     contacts.clear(); // Clear existing contacts
     string line;
+    int lineNumber = 0;
 
     while (getline(file, line)) {
+        ++lineNumber;
+        cout << "Reading line " << lineNumber << ": " << line << endl;
         stringstream ss(line);
         string firstName, lastName, phone, email, birthday, note;
 
         // Read fields separated by commas
-        getline(ss, firstName, ',');
-        getline(ss, lastName, ',');
-        getline(ss, phone, ',');
-        getline(ss, email, ',');
-        getline(ss, birthday, ',');
-        getline(ss, note);
+        if (!getline(ss, firstName, ',') || !getline(ss, lastName, ',') || 
+            !getline(ss, phone, ',') || !getline(ss, email, ',') || 
+            !getline(ss, birthday, ',') || !getline(ss, note)) {
+            cerr << "Warning: Skipping invalid or incomplete line " << lineNumber << ": " << line << endl;
+            continue;
+        }
 
         contacts.emplace_back(firstName, lastName, phone, email, birthday, note);
+        cout << "Loaded contact: " << firstName << " " << lastName << endl;
     }
 
     file.close();
     return true;
 }
 
-// Save contacts to a file
-bool ContactManager::saveContacts(const Contact& newContact, const string& filename) {
-    ofstream outfile("contacts.txt", ios::trunc);
-    if (!outfile) {
-        cerr << "Error: Could not open " << filename << " for writing." << endl;
-        return false;
-    }
-
-    for (const auto& contact : contacts) {
-        outfile << contact.getFirstName() << ","
-                << contact.getLastName() << ","
-                << contact.getPhone() << ","
-                << contact.getEmail() << ","
-                << contact.getBirthday() << ","
-                << contact.getNote() << endl;
-    }
-
-    outfile.close();
-    return true;
-}
-
+// Save all contacts to a file
 void ContactManager::saveAllContacts() {
-    ofstream outFile("contacts.txt", std::ios::trunc);  // Use the member variable `filename` for the file name
+    ofstream outFile("contacts.txt", std::ios::trunc);
     if (!outFile) {
-        cerr << "Error: Could not open " << filename << " for writing.\n";
+        cerr << "Error: Could not open contacts.txt for writing.\n";
         return;
     }
 
