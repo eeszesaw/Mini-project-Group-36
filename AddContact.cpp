@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <limits>
 #include <string>
@@ -73,11 +74,13 @@ bool isValidPhone(const string& phone) {
     return true;
 }
     
-// Function to validate email
+// Updated function to validate email
 bool isValidEmail(const string& email) {
     size_t atPos = email.find('@');
-    size_t dotPos = email.find('.', atPos);
-    if (atPos == string::npos || dotPos == string::npos) {
+    size_t dotPos = email.find('.', atPos);  // Ensure dot is after '@'
+
+    // Check if '@' exists, '.' exists after '@', and the domain has at least one character after '.'
+    if (atPos == string::npos || dotPos == string::npos || dotPos <= atPos + 1 || dotPos == email.length() - 1) {
         cout << "Hmm, that email doesn't seem quite right. Can you enter a valid one, please?\n";
         return false;
     }
