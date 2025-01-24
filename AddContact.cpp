@@ -1,4 +1,5 @@
-
+/*Written by: CHONG JUN XIANG 23301918
+Function purpose: Add new contact person information and saved it to the file*/
 #include <iostream>
 #include <limits>
 #include <string>
