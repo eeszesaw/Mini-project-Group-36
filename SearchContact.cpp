@@ -36,6 +36,7 @@ void searchContact() {
         }
     }
 
+    //if the contact entered not match to contact list contact.txt
     if (!found) {
         cout << "No contact found matching your query.\n";
     }
