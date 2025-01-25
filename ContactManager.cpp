@@ -1,3 +1,6 @@
+/*Written by: SAW EE-SZE 23301850
+Function purpose: Implements the methods for adding, viewing, searching, editing, deleting, saving to a file, and loading from a file*/
+
 #include "ContactManager.hpp"
 #include <sstream>
 #include <string>

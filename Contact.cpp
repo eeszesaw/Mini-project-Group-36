@@ -1,3 +1,6 @@
+/*Written by: CHONG JUN XIANG 23301918
+Function purpose: Implements the methods of the Contact class.*/
+
 #include "Contact.hpp"
 #include <iostream>
 

@@ -11,12 +11,14 @@ Function purpose: Removes a contact based on a full name*/
 
 using namespace std;
 
+//Purpose: Removes leading and trailing whitespace (including spaces and tabs) from a given string.
 string trim(const string& str) {
     size_t first = str.find_first_not_of(" \t");
     size_t last = str.find_last_not_of(" \t");
     return (first == string::npos || last == string::npos) ? "" : str.substr(first, last - first + 1);
 }
 
+//Purpose: Converts all characters in a string to lowercase.
 string toLower(const string& str) {
     string lower = str;
     transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
