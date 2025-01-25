@@ -1,3 +1,12 @@
+/* Author : Jazima Binti Hasnulhadi 
+matric no.: 23303623
+Function to edit an existing contact in the contact list.
+This function prompts the user for the full name of the contact they wish to edit,
+searches for that contact in the "contacts.txt" file, and allows the user to update
+the contact's details if found.
+Returns: None
+*/
+
 #include "EditContact.hpp"
 #include <iostream>
 #include <fstream>

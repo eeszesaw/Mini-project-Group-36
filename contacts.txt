@@ -3,3 +3,4 @@ Jane,Smith,0987654321,janesmith@example.com,1992-05-15,Colleague at work
 Michael,Johnson,5551234567,michaelj@example.com,1988-07-20,Neighbor
 Emily,Davis,4449876543,emilyd@example.com,1995-11-10,Book club member
 Siti,Fatimah,01236589471,siti@email.com,2000-03-01,roommate
+CHONG,XIANG,01155053225,chongjunxiang2@gmail.com,1998-02-11,friend
