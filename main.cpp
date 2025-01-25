@@ -1,5 +1,6 @@
 /*Written by: MUHAMMAD ADAM IKHWAN BIN AZLI 23304205
-Function purpose: The main code of this project, linking to the other functions, and provide the user interface (UI) for the user*/
+Function purpose: The main code of this project, linking to the other functions, and provide the user interface (UI)
+for the codes of whole project*/
 
 #include "ContactManager.hpp"
 #include "AddContact.hpp"
