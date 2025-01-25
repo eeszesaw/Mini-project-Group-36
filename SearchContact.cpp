@@ -1,3 +1,6 @@
+/*Written by: HAIRUL RIDUAN HAFFIS BIN SAHALLIZAN 23303790
+Function purpose: Search function for the contacts saved in contact.txt file by using name or phone number*/
+
 #include "SearchContact.hpp"
 #include <iostream>
 #include <fstream>
