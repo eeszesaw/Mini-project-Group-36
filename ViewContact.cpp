@@ -1,3 +1,11 @@
+/* Author : Nur Iffa Nadhirah Binti Zainal 
+matric no.: 23304079
+Purpose of the viewContact function:
+The viewContact function reads and displays all contacts from the "contacts.txt" file. 
+It extracts and prints each contact's first name, last name, phone number, email, birthday, and notes in a clear format. 
+This function helps users easily view their contact information.
+*/
+
 #include "ViewContact.hpp"
 #include <iostream>
 #include <fstream>
